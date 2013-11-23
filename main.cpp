@@ -31,7 +31,11 @@ int updateNewTable(vector<headpairs_t> &headvec, Table &itab, Table &otab)
     for(i=0;i<headvec.size();i++){
         otab.Tablewrite(0, headvec[i].ocol, headvec[i].takeDatabasefieldname?itab.Tableread(0,headvec[i].icol):headvec[i].oname);
         for(row=1;row<itab.getNbrofrows();row++){
-            otab.Tablewrite(row, headvec[i].ocol, itab.Tableread(row, headvec[i].icol));
+            if("&"==headvec[i].iname.substr(0,1)){
+                otab.Tablewrite(row, headvec[i].ocol, headvec[i].iname.substr(1,std::string::npos));
+            }else{
+                otab.Tablewrite(row, headvec[i].ocol, itab.Tableread(row, headvec[i].icol));
+            }
         }
     }
     return 0;
@@ -52,13 +56,14 @@ int main()
 
     conf.loadConfig("digikey2kicadschpatcher.conf");
     state = NONE;
-    while(EOFile!=state){
-        state = conf.getConfig(row, head2headvec, iFilename, oFilename);
-        cout << state << " " << row << endl;
+    while(1){
         head2headvec.clear();
-        iFile.open(iFilename);
+        state = conf.getConfig(row, head2headvec, iFilename, oFilename);
+        if(NONE==state || EOFile==state) break;
+        iFile.open(iFilename); // muss ANSI codiert sein; UTF-8 beginnt mit Steuerzeichen, dass falsch als Zeichen ausgewerte wird
         oFile.open(oFilename);
         itab.loadTable(iFile);
+        itab.rmquotmarks();
         otab.newTable(itab.getNbrofrows(), head2headvec.size());
         updateicol(head2headvec, itab);
         updateNewTable(head2headvec, itab, otab);

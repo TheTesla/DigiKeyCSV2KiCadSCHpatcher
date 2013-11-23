@@ -26,7 +26,11 @@ int configread::loadConfig(string Filename)
 
 int configread::loadConfig(ifstream &File)
 {
-    return tab.loadTable(File, ",", " \t", " \t");
+    int err;
+    err = tab.loadTable(File, ",", " \t", " \t");
+    if(0!=err) return err;
+    tab.rmquotmarks();
+    return 0;
 }
 
 configstate_et configread::getConfig(unsigned &row, vector<headpairs_t> &head2headvec, string &iFilename, string &oFilename)
@@ -37,7 +41,6 @@ configstate_et configread::getConfig(unsigned &row, vector<headpairs_t> &head2he
     headpairs_t head2head;
     state = NONE;
     for(;row<tab.getNbrofrows();row++){
-            cout << " " << row << endl;
         str = tab.Tableread(row, 0);
         if(false==tab.OK){
             state = EOFile;
