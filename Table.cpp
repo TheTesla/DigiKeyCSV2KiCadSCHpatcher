@@ -25,6 +25,7 @@ int Table::newTable(unsigned NbrofRows, unsigned NbrofCols)
 int Table::saveTable(ofstream &File, string delim)
 {
     unsigned row, col;
+    cout << "test" << endl;
     if(0==rows || 0==cols){
         return 0;
     }
@@ -32,8 +33,11 @@ int Table::saveTable(ofstream &File, string delim)
     try{
         for(row=0;row<rows;row++){
             for(col=0;col+1<cols;col++){
+                //cout << " " << row << " " << col << endl;
+                //cout << Tableread(row, col) << delim;
                 File << Tableread(row, col) << delim;
             }
+            //cout << Tableread(row, cols-1) << endl;
             File << Tableread(row, cols-1) << endl;
         }
     }

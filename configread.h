@@ -14,7 +14,8 @@ class configread
         ~configread();
         int loadConfig(string Filename);
         int loadConfig(ifstream &File);
-        configstate_et getConfig(unsigned &row, vector<headpairs_t> &head2headvec, string &iFilename, string &oFilename);
+        //configstate_et getConfig(unsigned &row, vector<headpairs_t> &head2headvec, string &iFilename, string &oFilename);
+        configstate_et getConfig(unsigned &row, vector<iheadvec_t> &iheadmat, oheadvec_t &oheadvec);
 
 
     protected:

@@ -33,15 +33,19 @@ int configread::loadConfig(ifstream &File)
     return 0;
 }
 
-configstate_et configread::getConfig(unsigned &row, vector<headpairs_t> &head2headvec, string &iFilename, string &oFilename)
+configstate_et configread::getConfig(unsigned &row, vector<iheadvec_t> &iheadmat, oheadvec_t &oheadvec)
 {
     unsigned col;
     string str;
     configstate_et state;
     headpairs_t head2head;
+    ihead_t ihead;
+    iheadvec_t iheadvec;
+    ohead_t ohead;
     state = NONE;
     for(;row<tab.getNbrofrows();row++){
         str = tab.Tableread(row, 0);
+        cout << str << endl;
         if(false==tab.OK){
             state = EOFile;
             break;
@@ -50,20 +54,28 @@ configstate_et configread::getConfig(unsigned &row, vector<headpairs_t> &head2he
             case NONE:
                 if("INPUT" == str){
                     state = INPUT;
-                    iFilename = tab.Tableread(row, 1);
+                    iheadvec.iFilename = tab.Tableread(row, 1);
                     break;
                 }
                 if("OUTPUT" == str){
                     state = ERROR;
-                    iFilename = "";
-                    oFilename = "";
+                    iheadvec.iFilename = "";
+                    oheadvec.oFilename = "";
                     break;
                 }
                 break;
             case INPUT:
+                if("INPUT" == str){
+                    iheadmat.push_back(iheadvec);
+                    iheadvec.iheadvec.clear();
+                    state = INPUT;
+                    iheadvec.iFilename = tab.Tableread(row, 1);
+                    break;
+                }
                 if("OUTPUT" == str){
                     state = OUTPUT;
-                    oFilename = tab.Tableread(row, 1);
+                    oheadvec.oFilename = tab.Tableread(row, 1);
+                    iheadmat.push_back(iheadvec);
                     break;
                 }
                 for(col=0;col<tab.getNbrofcols();col++){
@@ -71,23 +83,20 @@ configstate_et configread::getConfig(unsigned &row, vector<headpairs_t> &head2he
                         break;
                     }
                     if("&"==tab.Tableread(row, col).substr(0,1)){
-                        head2head.iname = tab.Tableread(row, col);
+                        ihead.iname = tab.Tableread(row, col);
                     }else{
-                        head2head.iname = tab.Tableread(row, col).substr(1, std::string::npos);
+                        ihead.iname = tab.Tableread(row, col).substr(1, std::string::npos);
                     }
-                    head2head.namecontains = ">"==tab.Tableread(row, col).substr(0, 1);
-                    head2head.strcontainsname = "<"==tab.Tableread(row, col).substr(0, 1);
-                    head2headvec.push_back(head2head);
+                    ihead.namecontains = ">"==tab.Tableread(row, col).substr(0, 1);
+                    ihead.strcontainsname = "<"==tab.Tableread(row, col).substr(0, 1);
+                    iheadvec.iheadvec.push_back(ihead);
                 }
                 break;
             case OUTPUT:
                 for(col=0;col<tab.getNbrofcols();col++){
-                    if(head2headvec.size()<=col) {
-                        state = ERROR;
-                        break;
-                    }
-                    head2headvec[col].ocol = col;
-                    head2headvec[col].oname = tab.Tableread(row, col);
+                    ohead.ocol = col;
+                    ohead.oname = tab.Tableread(row, col);
+                    oheadvec.oheadvec.push_back(ohead);
                 }
                 state = READY;
                 break;
