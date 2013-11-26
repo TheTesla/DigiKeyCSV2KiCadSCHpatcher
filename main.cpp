@@ -5,50 +5,55 @@
 #include "extra.h"
 #include "configread.h"
 
+
+#define COPYRIGHT "Copyright (C) 2013 Stefan Helmert"
+#define SHOW_COPYRIGHT std::cout << std::endl << COPYRIGHT << std::endl << std::endl;
+
 using namespace std;
 
 
 
 
-int updateicol(vector<ihead_t> &iheadvec, Table &itab)
+void updateicol(vector<ihead_t> &iheadvec, Table &itab)
 {
     unsigned i, icol;
     string str;
     for(i=0;i<iheadvec.size();i++){
         for(icol=0;icol<itab.getNbrofcols();icol++){
-            cout << "updateicol: " << icol << " " << i << endl;
             str = itab.Tableread(0, icol);
-            cout << str << endl;
             if((iheadvec[i].iname == str) || (iheadvec[i].namecontains && std::string::npos!=str.find(iheadvec[i].iname)) || (iheadvec[i].strcontainsname && (std::string::npos!=iheadvec[i].iname.find(str)))){
                 iheadvec[i].icol = icol;
             }
         }
     }
-    return 0;
 }
 
 int updateicol(vector<iheadvec_t> &iheadmat, vector<Table*> &itabvec)
 {
     unsigned i;
-    //cout << "size: " << iheadmat.size() << " " << itabvec.size() << endl;
+    if(iheadmat.size()>itabvec.size()) return -1;
     for(i=0;i<iheadmat.size();i++){
         updateicol(iheadmat[i].iheadvec, *itabvec[i]);
     }
-
     return 0;
 }
 
 int updateNewTable(vector<ihead_t> &iheadvec, vector<ohead_t> &oheadvec, Table &itab, Table &otab, int orowoff)
 {
     unsigned i, row;
-    for(i=0;i<iheadvec.size();i++){
+    if(itab.getNbrofrows()+orowoff>otab.getNbrofrows()) return -1;
+
+    for(i=0;i<min(iheadvec.size(),oheadvec.size());i++){
         otab.Tablewrite(0, oheadvec[i].ocol, oheadvec[i].oname);
         for(row=1;row<itab.getNbrofrows();row++){
+            if(1>iheadvec[i].iname.size()) return -4;
             if("&"==iheadvec[i].iname.substr(0,1)){
-                otab.Tablewrite(row + orowoff, oheadvec[i].ocol, iheadvec[i].iname.substr(1,std::string::npos));
+                otab.Tablewrite(row + orowoff, oheadvec[i].ocol, iheadvec[i].iname.substr(1, std::string::npos));
             }else{
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, itab.Tableread(row, iheadvec[i].icol));
             }
+            if(false==otab.OK) return -2;
+            if(false==itab.OK) return -3;
         }
     }
     return 0;
@@ -58,6 +63,7 @@ int updateNewTable(vector<iheadvec_t> &iheadmat, oheadvec_t &oheadvec, vector<Ta
 {
     int orowoff = 0;
     int i;
+    if(iheadmat.size()>itabvec.size()) return -1;
     for(i=0;i<iheadmat.size();i++){
         updateNewTable(iheadmat[i].iheadvec, oheadvec.oheadvec, *itabvec[i], otab, orowoff);
         orowoff += itabvec[i]->getNbrofrows() - 1;
@@ -65,7 +71,7 @@ int updateNewTable(vector<iheadvec_t> &iheadmat, oheadvec_t &oheadvec, vector<Ta
     return 0;
 }
 
-int main()
+int doit(string cFilename)
 {
     Table *itab_ptr;
     vector<Table*> itabvec;
@@ -73,8 +79,6 @@ int main()
     ifstream iFile;
     vector<ifstream> iFilevec;
     ofstream oFile;
-    vector<headpairs_t> head2headvec;
-    headpairs_t head2head;
     oheadvec_t oheadvec;
     vector<iheadvec_t> iheadmat;
     configread conf;
@@ -82,45 +86,91 @@ int main()
     unsigned row;
     unsigned TotalNbrofrows;
     unsigned TotalNbrofcols;
+    unsigned loopround;
     string iFilename, oFilename;
     int i;
-    conf.loadConfig("digikey2kicadschpatcher.conf");
-    state = NONE;
-    TotalNbrofrows = 0;
-    TotalNbrofcols = 0;
+    int err;
+    SHOW_COPYRIGHT
+    err = conf.loadConfig(cFilename.c_str());
+    if(0!=err) return 10*err;
+    cout << endl << "loaded config file - " << cFilename << endl << endl;
+    //looping through multiple runs: inputs to output
+    row = 0;
+    loopround = 0;
     while(1){
-        head2headvec.clear();
+        // reset
+        iheadmat.clear();
+        oheadvec.oheadvec.clear();
+        itabvec.clear();
+        TotalNbrofrows = 0;
+        TotalNbrofcols = 0;
+
         state = conf.getConfig(row, iheadmat, oheadvec);
         if(NONE==state || EOFile==state) break;
-        for(i=0;i<iheadmat.size();i++){
-            iFile.open(iheadmat[i].iFilename.c_str()); // muss ANSI codiert sein; UTF-8 beginnt mit Steuerzeichen, dass falsch als Zeichen ausgewerte wird
-            itab_ptr = new Table;
-            itab_ptr->loadTable(iFile);
-            iFile.close();
 
+        cout << "round " << ++loopround << ":" << endl;
+
+        // looping through multiple input files for one output file
+        for(i=0;i<iheadmat.size();i++){
+            iFile.exceptions(std::ifstream::badbit | std::ifstream::failbit);
+            try{
+                iFile.open(iheadmat[i].iFilename.c_str()); // muss ANSI codiert sein; UTF-8 beginnt mit Steuerzeichen, dass falsch als Zeichen ausgewerte wird
+            }
+            catch(std::ifstream::failure e){
+                return -1;
+            }            itab_ptr = new Table;
+            cout << "    read input file " << i+1 << " - " << iheadmat[i].iFilename << endl;
+
+            itab_ptr->loadTable(iFile);
+            if(iFile.is_open()) iFile.close();
             itab_ptr->rmquotmarks();
             TotalNbrofrows += itab_ptr->getNbrofrows();
             TotalNbrofcols = max(TotalNbrofcols, itab_ptr->getNbrofcols());
             itabvec.push_back(itab_ptr);
 
         }
-        cout << TotalNbrofrows << " " <<TotalNbrofcols << endl;
-        oFile.open(oheadvec.oFilename.c_str());
-        cout << oheadvec.oFilename << endl;
+        oFile.exceptions(std::ifstream::badbit | std::ifstream::failbit);
+        try{
+            oFile.open(oheadvec.oFilename.c_str());
+        }
+        catch(std::ifstream::failure e){
+            return -2;
+        }
+        cout << "    database written to output file - " << oheadvec.oFilename << endl;
         otab.newTable(TotalNbrofrows, TotalNbrofrows);
-        cout << "blub" << endl;
         updateicol(iheadmat, itabvec);
         updateNewTable(iheadmat, oheadvec, itabvec, otab);
-        otab.saveTable(oFile, "\t");
+        err = otab.saveTable(oFile, "\t");
+        if(0!=err){
+            return 11*err;
+        }
         for(i=0;i<iheadmat.size();i++){
             delete itabvec[i];
         }
-        oFile.close();
+        if(oFile.is_open()) oFile.close();
     }
-    cout << "end" << endl;
-    //cout << itab.getNbrofrows() << " " << itab.getNbrofcols() << endl;
+    return 0;
+}
 
 
+
+int main(int argc, char *argv[])
+{
+    int err;
+    if(2==argc){
+        err = doit(argv[1]);
+        if(-20==err) cerr << "could not open config file - bad" << endl;
+        if(-10==err) cerr << "could not open config file" << endl;
+        if(-1==err) cerr << "could not open input file" << endl;
+        if(-2==err) cerr << "could not open output file" << endl;
+        if(-11==err) cerr << "could not write output file" << endl;
+        if(-22==err) cerr << "could not write output file - bad" << endl;
+
+    }else{
+        cout << "This program is designed to convert csv files from digikey.de to database files for the kicadschpatcher." << endl;
+        SHOW_COPYRIGHT
+        cout << endl << "usage: digikeycsv2kicadschpatch configfile.conf" << endl;
+    }
 
 
     return 0;

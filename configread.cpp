@@ -45,7 +45,6 @@ configstate_et configread::getConfig(unsigned &row, vector<iheadvec_t> &iheadmat
     state = NONE;
     for(;row<tab.getNbrofrows();row++){
         str = tab.Tableread(row, 0);
-        cout << str << endl;
         if(false==tab.OK){
             state = EOFile;
             break;
@@ -79,6 +78,13 @@ configstate_et configread::getConfig(unsigned &row, vector<iheadvec_t> &iheadmat
                     break;
                 }
                 for(col=0;col<tab.getNbrofcols();col++){
+                    if(1>tab.Tableread(row,col).size()){
+                        ihead.iname = "&~";
+                        ihead.namecontains = false;
+                        ihead.strcontainsname = false;
+                        iheadvec.iheadvec.push_back(ihead);
+                        continue;
+                    }
                     if("#"==tab.Tableread(row,col).substr(0,1)){
                         break;
                     }
