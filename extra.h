@@ -3,6 +3,9 @@
 
 #include <string>
 
+#define COPYRIGHT "Copyright (C) 2013 Stefan Helmert"
+
+
 enum configstate_et
 {
     ERROR = -1,
@@ -12,18 +15,6 @@ enum configstate_et
     READY = 3,
     EOFile = 255
 };
-
-typedef struct headpairs_t
-{
-    std::string iname = "";
-    int icol = -1;
-    bool namecontains = false;
-    bool strcontainsname = false;
-    bool takeDatabasefieldname = false;
-    std::string oname = "";
-    int ocol = -1;
-} headpairs_t;
-
 
 typedef struct ihead_t
 {

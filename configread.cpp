@@ -1,6 +1,9 @@
 #include "configread.h"
 #include <iostream>
 
+#define COPYRIGHT "Copyright (C) 2013 Stefan Helmert"
+
+
 configread::configread()
 {
 }
@@ -38,7 +41,6 @@ configstate_et configread::getConfig(unsigned &row, vector<iheadvec_t> &iheadmat
     unsigned col;
     string str;
     configstate_et state;
-    headpairs_t head2head;
     ihead_t ihead;
     iheadvec_t iheadvec;
     ohead_t ohead;

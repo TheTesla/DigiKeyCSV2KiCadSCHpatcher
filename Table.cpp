@@ -2,6 +2,9 @@
 #include "Table.h"
 #include <iostream>
 
+#define COPYRIGHT "Copyright (C) 2013 Stefan Helmert"
+
+
 Table::Table()
 {
     tabstr = nullptr;
@@ -24,7 +27,7 @@ int Table::newTable(unsigned NbrofRows, unsigned NbrofCols)
 
 int Table::saveTable(ofstream &File, string delim)
 {
-    unsigned row, col;
+    int row, col;
     if(0==rows || 0==cols){
         return 0;
     }

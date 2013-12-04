@@ -5,8 +5,8 @@
 #include "extra.h"
 #include "configread.h"
 
-
 #define COPYRIGHT "Copyright (C) 2013 Stefan Helmert"
+
 #define SHOW_COPYRIGHT std::cout << std::endl << COPYRIGHT << std::endl << std::endl;
 
 using namespace std;
@@ -44,11 +44,17 @@ int updateNewTable(vector<ihead_t> &iheadvec, vector<ohead_t> &oheadvec, Table &
     if(itab.getNbrofrows()+orowoff>otab.getNbrofrows()) return -1;
 
     for(i=0;i<min(iheadvec.size(),oheadvec.size());i++){
-        otab.Tablewrite(0, oheadvec[i].ocol, oheadvec[i].oname);
+        if('$'==oheadvec[i].oname[0]){
+            otab.Tablewrite(0, oheadvec[i].ocol, oheadvec[i].oname.substr(1,std::string::npos));
+        }else{
+            otab.Tablewrite(0, oheadvec[i].ocol, oheadvec[i].oname);
+        }
         for(row=1;row<itab.getNbrofrows();row++){
             if(1>iheadvec[i].iname.size()) return -4;
-            if("&"==iheadvec[i].iname.substr(0,1)){
+            if('&'==iheadvec[i].iname[0]){
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, iheadvec[i].iname.substr(1, std::string::npos));
+            }else if('$'==oheadvec[i].oname[0]){
+                otab.Tablewrite(row + orowoff, oheadvec[i].ocol, to_string(norm_value(itab.Tableread(row, iheadvec[i].icol))));
             }else{
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, itab.Tableread(row, iheadvec[i].icol));
             }
@@ -62,7 +68,7 @@ int updateNewTable(vector<ihead_t> &iheadvec, vector<ohead_t> &oheadvec, Table &
 int updateNewTable(vector<iheadvec_t> &iheadmat, oheadvec_t &oheadvec, vector<Table*> &itabvec, Table &otab)
 {
     int orowoff = 0;
-    int i;
+    unsigned i;
     if(iheadmat.size()>itabvec.size()) return -1;
     for(i=0;i<iheadmat.size();i++){
         updateNewTable(iheadmat[i].iheadvec, oheadvec.oheadvec, *itabvec[i], otab, orowoff);
@@ -88,7 +94,7 @@ int doit(string cFilename)
     unsigned TotalNbrofcols;
     unsigned loopround;
     string iFilename, oFilename;
-    int i;
+    unsigned i;
     int err;
     SHOW_COPYRIGHT
     err = conf.loadConfig(cFilename.c_str());
