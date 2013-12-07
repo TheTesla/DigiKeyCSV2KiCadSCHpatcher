@@ -14,7 +14,7 @@
 	<algorithm>
 	"extraops.h"
 
-1386115399 c:\projekte\c++\digikeycsv2kicadschpatcher\extraops.h
+1386457584 c:\projekte\c++\digikeycsv2kicadschpatcher\extraops.h
 	<vector>
 	<string>
 
@@ -22,9 +22,8 @@
 	"Table.h"
 	<iostream>
 
-1386456185 source:c:\projekte\c++\digikeycsv2kicadschpatcher\extraops.cpp
+1386459216 source:c:\projekte\c++\digikeycsv2kicadschpatcher\extraops.cpp
 	"extraops.h"
-	<iostream>
 
 1386113995 source:c:\projekte\c++\digikeycsv2kicadschpatcher\configread.cpp
 	"configread.h"

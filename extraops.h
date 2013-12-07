@@ -39,6 +39,6 @@ typedef struct CSVparams_t
 
 string rmquotmarks(string str);
 void rmquotmarks(vector<datapair_t> &data);
-float norm_value(string str);
+double norm_value(string str);
 
 #endif // EXTRAOPS_H_INCLUDED

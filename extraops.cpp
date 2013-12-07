@@ -19,11 +19,12 @@ void rmquotmarks(vector<datapair_t> &data)
     }
 }
 
-float norm_value(string str)
+double norm_value(string str)
 {
     string valstr;
+    valstr = "";
     size_t commapos, endpos;
-    float prefix, value;
+    double prefix, value;
     size_t prefixpos;
     prefix = 1;
     commapos = str.find_first_not_of("0123456789");
@@ -49,6 +50,7 @@ float norm_value(string str)
         if('P'==str[prefixpos]) prefix = 1000000000000000;
     }
 
-    value = stof(valstr) * prefix;
+    value = stod(""+valstr+"") * prefix; // workarround gcc bug
+
     return value;
 }
