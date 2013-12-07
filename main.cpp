@@ -54,6 +54,7 @@ int updateNewTable(vector<ihead_t> &iheadvec, vector<ohead_t> &oheadvec, Table &
             if('&'==iheadvec[i].iname[0]){
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, iheadvec[i].iname.substr(1, std::string::npos));
             }else if('$'==oheadvec[i].oname[0]){
+                otab.Tablewrite(row + orowoff, oheadvec[i].ocol, "");
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, to_string(norm_value(itab.Tableread(row, iheadvec[i].icol))));
             }else{
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, itab.Tableread(row, iheadvec[i].icol));
