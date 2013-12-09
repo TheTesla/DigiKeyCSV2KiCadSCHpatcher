@@ -109,7 +109,7 @@ int doit(string cFilename)
         iheadmat.clear();
         oheadvec.oheadvec.clear();
         itabvec.clear();
-        TotalNbrofrows = 0;
+        TotalNbrofrows = 1;
         TotalNbrofcols = 0;
 
         state = conf.getConfig(row, iheadmat, oheadvec);
@@ -131,7 +131,7 @@ int doit(string cFilename)
             itab_ptr->loadTable(iFile);
             if(iFile.is_open()) iFile.close();
             itab_ptr->rmquotmarks();
-            TotalNbrofrows += itab_ptr->getNbrofrows();
+            TotalNbrofrows += itab_ptr->getNbrofrows() - 1;
             TotalNbrofcols = max(TotalNbrofcols, itab_ptr->getNbrofcols());
             itabvec.push_back(itab_ptr);
 
