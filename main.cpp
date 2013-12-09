@@ -144,7 +144,9 @@ int doit(string cFilename)
             return -2;
         }
         cout << "    database written to output file - " << oheadvec.oFilename << endl;
-        otab.newTable(TotalNbrofrows, TotalNbrofcols);
+        //otab.newTable(TotalNbrofrows, TotalNbrofcols);
+        otab.newTable(TotalNbrofrows, 9); // bug to force gcc bug
+
         updateicol(iheadmat, itabvec);
         updateNewTable(iheadmat, oheadvec, itabvec, otab);
         err = otab.saveTable(oFile, "\t");

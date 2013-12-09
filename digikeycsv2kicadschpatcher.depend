@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1386465194 source:c:\projekte\c++\digikeycsv2kicadschpatcher\main.cpp
+1386623388 source:c:\projekte\c++\digikeycsv2kicadschpatcher\main.cpp
 	<iostream>
 	"Table.h"
 	<fstream>
@@ -22,10 +22,11 @@
 	"Table.h"
 	<iostream>
 
-1386459216 source:c:\projekte\c++\digikeycsv2kicadschpatcher\extraops.cpp
+1386623518 source:c:\projekte\c++\digikeycsv2kicadschpatcher\extraops.cpp
 	"extraops.h"
+	<iostream>
 
-1386461801 source:c:\projekte\c++\digikeycsv2kicadschpatcher\configread.cpp
+1386465227 source:c:\projekte\c++\digikeycsv2kicadschpatcher\configread.cpp
 	"configread.h"
 	<iostream>
 

@@ -1,10 +1,10 @@
-Reference	Value	Footprint	Datasheets	Digi-Key Part Number	Manufacturer Part Number	Manufacturer	Power (W)	test	Tolerance	Image	Price	Temperature Coefficent	test										
-R	0.000000	0402	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF0402ZT0R00CT-ND	RMCF0402ZT0R00	Stackpole Electronics Inc	0.063000	test	Jumper	http://media.digikey.com/photos/Stackpole%20Photos/MFG_RMC%20SERIES.jpg	0.02000	-	T										
-R	0.000000	0603	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF0603ZT0R00CT-ND	RMCF0603ZT0R00	Stackpole Electronics Inc	0.100000	test	Jumper	http://media.digikey.com/photos/Stackpole%20Photos/MFG_RMC%20SERIES.jpg	0.02000	-	T										
-R	0.000000	0805	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF0805ZT0R00CT-ND	RMCF0805ZT0R00	Stackpole Electronics Inc	0.125000	test	Jumper	http://media.digikey.com/photos/Stackpole%20Photos/MFG_RMC%20SERIES.jpg	0.03000	-	T										
-R	0.000000	1206	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF1206ZT0R00CT-ND	RMCF1206ZT0R00	Stackpole Electronics Inc	0.250000	test	Jumper	http://media.digikey.com/photos/Stackpole%20Photos/MFG_RMC%20SERIES.jpg	0.05000	-	T										
-R	0.000000	1206	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF1206ZG0R00CT-ND	RMCF1206ZG0R00	Stackpole Electronics Inc	0.250000	test	Jumper	http://media.digikey.com/photos/Stackpole%20Photos/MFG_RMC%20SERIES.jpg	0.13000	-	T										
-R	0.000000	2010	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF2010ZT0R00CT-ND	RMCF2010ZT0R00	Stackpole Electronics Inc	0.750000	test	Jumper	http://media.digikey.com/Renders/Stackpole%20Renders/1210-Pkg.jpg	0.33000	-	T										
-R	0.000000	0201	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF0201ZT0R00CT-ND	RMCF0201ZT0R00	Stackpole Electronics Inc	0.050000	test	Jumper	http://media.digikey.com/Renders/Stackpole%20Renders/0201-RMCF-Series.jpg	0.12000	-	T										
-R	0.000000	2512	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF2512ZT0R00CT-ND	RMCF2512ZT0R00	Stackpole Electronics Inc	1.000000	test	Jumper	http://media.digikey.com/Photos/Stackpole%20Photos/2512%20(6432%20Metric).jpg	0.44000	-	T										
-R	0.000000	1210	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF1210ZT0R00CT-ND	RMCF1210ZT0R00	Stackpole Electronics Inc	0.500000	test	Jumper	http://media.digikey.com/photos/Stackpole%20Photos/MFG_RMC%20SERIES.jpg	0.21000	-	T										
+Reference	Value	Footprint	Datasheets	Digi-Key Part Number	Manufacturer Part Number	Manufacturer	Power (W)	test
+R	0.000000	0402	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF0402ZT0R00CT-ND	RMCF0402ZT0R00	Stackpole Electronics Inc	0.063000	test
+R	0.000000	0603	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF0603ZT0R00CT-ND	RMCF0603ZT0R00	Stackpole Electronics Inc	0.100000	test
+R	0.000000	0805	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF0805ZT0R00CT-ND	RMCF0805ZT0R00	Stackpole Electronics Inc	0.125000	test
+R	0.206000	1206	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF1206ZT0R00CT-ND	RMCF1206ZT0R00	Stackpole Electronics Inc	0.250000	test
+R	0.919000	1206	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF1206ZG0R00CT-ND	RMCF1206ZG0R00	Stackpole Electronics Inc	0.250000	test
+R	0.000000	2010	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF2010ZT0R00CT-ND	RMCF2010ZT0R00	Stackpole Electronics Inc	0.750000	test
+R	0.000000	0201	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF0201ZT0R00CT-ND	RMCF0201ZT0R00	Stackpole Electronics Inc	0.050000	test
+R	0.000000	2512	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF2512ZT0R00CT-ND	RMCF2512ZT0R00	Stackpole Electronics Inc	1.000000	test
+R	0.000000	1210	http://www.seielect.com/Catalog/SEI-RMCF_RMCP.pdf	RMCF1210ZT0R00CT-ND	RMCF1210ZT0R00	Stackpole Electronics Inc	0.500000	test

@@ -1,4 +1,5 @@
 #include "extraops.h"
+#include <iostream>
 
 #define COPYRIGHT "Copyright (C) 2013 Stefan Helmert"
 
@@ -50,7 +51,7 @@ double norm_value(string str)
         if('P'==str[prefixpos]) prefix = 1000000000000000;
     }
 
-    value = stod(""+valstr+"") * prefix; // workarround gcc bug
-
+    value = stod(valstr) * prefix; // workarround gcc bug
+    cout << valstr << " " << value << " " << prefix << endl;
     return value;
 }
