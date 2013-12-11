@@ -82,7 +82,7 @@ int doit(string cFilename)
 {
     Table *itab_ptr;
     vector<Table*> itabvec;
-    Table otab;
+    Table *otab_ptr;
     ifstream iFile;
     vector<ifstream> iFilevec;
     ofstream oFile;
@@ -109,6 +109,7 @@ int doit(string cFilename)
         iheadmat.clear();
         oheadvec.oheadvec.clear();
         itabvec.clear();
+
         TotalNbrofrows = 1;
         TotalNbrofcols = 0;
 
@@ -144,10 +145,12 @@ int doit(string cFilename)
             return -2;
         }
         cout << "    database written to output file - " << oheadvec.oFilename << endl;
-        otab.newTable(TotalNbrofrows, TotalNbrofcols);
+        otab_ptr = new Table();
+        otab_ptr->newTable(TotalNbrofrows, TotalNbrofcols);
         updateicol(iheadmat, itabvec);
-        updateNewTable(iheadmat, oheadvec, itabvec, otab);
-        err = otab.saveTable(oFile, "\t");
+        updateNewTable(iheadmat, oheadvec, itabvec, *otab_ptr);
+        err = otab_ptr->saveTable(oFile, "\t");
+        delete otab_ptr;
         if(0!=err){
             return 11*err;
         }

@@ -1,4 +1,5 @@
 #include "extraops.h"
+#include <iostream>
 
 #define COPYRIGHT "Copyright (C) 2013 Stefan Helmert"
 
@@ -32,6 +33,7 @@ double norm_value(string str)
     if(std::string::npos==endpos) endpos = commapos;
     valstr = str.substr(0, endpos);
     if(std::string::npos!=commapos) valstr[commapos] = '.';
+    if(0==commapos) valstr = "0"+valstr;
 
     prefixpos = str.find_first_of("afpnµumkKMGTP");
     if(std::string::npos!=prefixpos){
@@ -50,6 +52,7 @@ double norm_value(string str)
         if('P'==str[prefixpos]) prefix = 1000000000000000;
     }
 
+    cout << str << " " << valstr << endl;
     value = stod(""+valstr+"") * prefix; // workarround gcc bug
 
     return value;
