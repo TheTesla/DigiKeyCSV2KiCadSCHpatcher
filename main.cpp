@@ -83,7 +83,7 @@ int updateNewTable(vector<iheadvec_t> &iheadmat, oheadvec_t &oheadvec, vector<Ta
 
 void ihead_error_reporter(vector<iheadvec_t> &iheadmat)
 {
-    int i, j;
+    unsigned i, j;
     for(i=0;i<iheadmat.size();i++){
         for(j=0;j<iheadmat[i].iheadvec.size();j++){
             if(-1==iheadmat[i].iheadvec[j].icol){
