@@ -52,8 +52,6 @@ double norm_value(string str)
         if('P'==str[prefixpos]) prefix = 1000000000000000;
     }
 
-    cout << str << " " << valstr << endl;
     value = stod(""+valstr+"") * prefix; // workarround gcc bug
-
     return value;
 }

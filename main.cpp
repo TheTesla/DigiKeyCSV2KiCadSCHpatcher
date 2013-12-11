@@ -24,6 +24,9 @@ void updateicol(vector<ihead_t> &iheadvec, Table &itab)
             if((iheadvec[i].iname == str) || (iheadvec[i].namecontains && std::string::npos!=str.find(iheadvec[i].iname)) || (iheadvec[i].strcontainsname && (std::string::npos!=iheadvec[i].iname.find(str)))){
                 iheadvec[i].icol = icol;
             }
+            if('&'==iheadvec[i].iname[0]){
+                iheadvec[i].icol = -2;
+            }
         }
     }
 }
@@ -51,7 +54,7 @@ int updateNewTable(vector<ihead_t> &iheadvec, vector<ohead_t> &oheadvec, Table &
         }
         for(row=1;row<itab.getNbrofrows();row++){
             if(1>iheadvec[i].iname.size()) return -4;
-            if('&'==iheadvec[i].iname[0]){
+            if(-2==iheadvec[i].icol){
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, iheadvec[i].iname.substr(1, std::string::npos));
             }else if('$'==oheadvec[i].oname[0]){
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, "");
@@ -76,6 +79,18 @@ int updateNewTable(vector<iheadvec_t> &iheadmat, oheadvec_t &oheadvec, vector<Ta
         orowoff += itabvec[i]->getNbrofrows() - 1;
     }
     return 0;
+}
+
+void ihead_error_reporter(vector<iheadvec_t> &iheadmat)
+{
+    int i, j;
+    for(i=0;i<iheadmat.size();i++){
+        for(j=0;j<iheadmat[i].iheadvec.size();j++){
+            if(-1==iheadmat[i].iheadvec[j].icol){
+                cout << "    ERROR no head entry for \"" << iheadmat[i].iheadvec[j].iname <<"\" on input file" << endl;
+            }
+        }
+    }
 }
 
 int doit(string cFilename)
@@ -148,6 +163,7 @@ int doit(string cFilename)
         otab_ptr = new Table();
         otab_ptr->newTable(TotalNbrofrows, TotalNbrofcols);
         updateicol(iheadmat, itabvec);
+        ihead_error_reporter(iheadmat);
         updateNewTable(iheadmat, oheadvec, itabvec, *otab_ptr);
         err = otab_ptr->saveTable(oFile, "\t");
         delete otab_ptr;
