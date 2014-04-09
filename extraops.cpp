@@ -30,8 +30,12 @@ double norm_value(string str)
     prefix = 1;
     commapos = str.find_first_not_of("0123456789");
     endpos = str.find_first_not_of("0123456789", commapos+1);
-    if(std::string::npos==endpos) endpos = commapos;
-    valstr = str.substr(0, endpos);
+    if(std::string::npos==endpos) {
+        valstr = str;
+    }
+    else{
+        valstr = str.substr(0, endpos);
+    }
     if(std::string::npos!=commapos) valstr[commapos] = '.';
     if(0==commapos) valstr = "0"+valstr;
 
@@ -52,6 +56,7 @@ double norm_value(string str)
         if('P'==str[prefixpos]) prefix = 1000000000000000;
     }
 
-    value = stod(""+valstr+"") * prefix; // workarround gcc bug
+    value = stod(valstr) * prefix;
+    if(stod(""+valstr+"")!=stod(valstr)) cout << "BUG!" << endl;
     return value;
 }
