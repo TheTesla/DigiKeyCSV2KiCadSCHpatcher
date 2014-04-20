@@ -26,7 +26,7 @@ double norm_value(string str)
     valstr = "";
     size_t commapos, endpos;
     double prefix, value;
-    size_t prefixpos;
+    size_t prefixpos, emptypos;
     prefix = 1;
     commapos = str.find_first_not_of("0123456789");
     endpos = str.find_first_not_of("0123456789", commapos+1);
@@ -40,6 +40,10 @@ double norm_value(string str)
     if(0==commapos) valstr = "0"+valstr;
 
     prefixpos = str.find_first_of("afpnµumkKMGTP");
+    if((prefixpos!=std::string::npos) && (prefixpos>endpos+1)){ // Characters between last number digit
+        emptypos = str.find_first_not_of(" _"); // only spaces under "_" are allowed
+        if((emptypos==std::string::npos) || (emptypos!=prefixpos-1)) prefixpos = std::string::npos;
+    }
     if(std::string::npos!=prefixpos){
         if('a'==str[prefixpos]) prefix = 0.000000000000000001;
         if('f'==str[prefixpos]) prefix = 0.000000000000001;
