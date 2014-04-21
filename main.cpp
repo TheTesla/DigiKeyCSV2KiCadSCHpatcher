@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include "Table.h"
 #include <fstream>
 #include <string>
@@ -44,6 +45,7 @@ int updateicol(vector<iheadvec_t> &iheadmat, vector<Table*> &itabvec)
 int updateNewTable(vector<ihead_t> &iheadvec, vector<ohead_t> &oheadvec, Table &itab, Table &otab, int orowoff)
 {
     unsigned i, row;
+    std::stringstream valstream;
     if(itab.getNbrofrows()+orowoff>otab.getNbrofrows()) return -1;
 
     for(i=0;i<min(iheadvec.size(),oheadvec.size());i++){
@@ -58,7 +60,9 @@ int updateNewTable(vector<ihead_t> &iheadvec, vector<ohead_t> &oheadvec, Table &
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, iheadvec[i].iname.substr(1, std::string::npos));
             }else if('$'==oheadvec[i].oname[0]){
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, "");
-                otab.Tablewrite(row + orowoff, oheadvec[i].ocol, to_string(norm_value(itab.Tableread(row, iheadvec[i].icol))));
+                valstream.str("");
+                valstream << std::scientific << norm_value(itab.Tableread(row, iheadvec[i].icol));
+                otab.Tablewrite(row + orowoff, oheadvec[i].ocol, valstream.str());
             }else{
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, itab.Tableread(row, iheadvec[i].icol));
             }
