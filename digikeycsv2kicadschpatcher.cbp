@@ -42,6 +42,8 @@
 		<Unit filename="extraops.cpp" />
 		<Unit filename="extraops.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="tolerance.cpp" />
+		<Unit filename="tolerance.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

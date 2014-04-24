@@ -12,6 +12,7 @@
 
 #include <vector>
 #include <string>
+#include <cmath>
 
 using namespace std;
 
@@ -39,6 +40,7 @@ typedef struct CSVparams_t
 
 string rmquotmarks(string str);
 void rmquotmarks(vector<datapair_t> &data);
+double norm_value(string str, size_t &start);
 double norm_value(string str);
 
 #endif // EXTRAOPS_H_INCLUDED

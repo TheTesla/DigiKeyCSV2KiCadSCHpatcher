@@ -5,6 +5,8 @@
 #include <string>
 #include "extra.h"
 #include "configread.h"
+#include "tolerance.h"
+
 
 #define COPYRIGHT "Copyright (C) 2013 Stefan Helmert"
 
@@ -49,11 +51,13 @@ int updateNewTable(vector<ihead_t> &iheadvec, vector<ohead_t> &oheadvec, Table &
     if(itab.getNbrofrows()+orowoff>otab.getNbrofrows()) return -1;
 
     for(i=0;i<min(iheadvec.size(),oheadvec.size());i++){
+        // write out tablehead
         if('$'==oheadvec[i].oname[0]){
             otab.Tablewrite(0, oheadvec[i].ocol, oheadvec[i].oname.substr(1,std::string::npos));
         }else{
             otab.Tablewrite(0, oheadvec[i].ocol, oheadvec[i].oname);
         }
+        // process/write table content
         for(row=1;row<itab.getNbrofrows();row++){
             if(1>iheadvec[i].iname.size()) return -4;
             if(-2==iheadvec[i].icol){
@@ -62,6 +66,18 @@ int updateNewTable(vector<ihead_t> &iheadvec, vector<ohead_t> &oheadvec, Table &
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, "");
                 valstream.str("");
                 valstream << std::scientific << norm_value(itab.Tableread(row, iheadvec[i].icol));
+                otab.Tablewrite(row + orowoff, oheadvec[i].ocol, valstream.str());
+            }else if('%'==oheadvec[i].oname[0]){
+                otab.Tablewrite(row + orowoff, oheadvec[i].ocol, to_string(is_relative(itab.Tableread(row, iheadvec[i].icol))));
+            }else if('+'==oheadvec[i].oname[0]){
+                otab.Tablewrite(row + orowoff, oheadvec[i].ocol, "");
+                valstream.str("");
+                valstream << std::scientific << tolupp(itab.Tableread(row, iheadvec[i].icol));
+                otab.Tablewrite(row + orowoff, oheadvec[i].ocol, valstream.str());
+            }else if('-'==oheadvec[i].oname[0]){
+                otab.Tablewrite(row + orowoff, oheadvec[i].ocol, "");
+                valstream.str("");
+                valstream << std::scientific << tollow(itab.Tableread(row, iheadvec[i].icol));
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, valstream.str());
             }else{
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, itab.Tableread(row, iheadvec[i].icol));

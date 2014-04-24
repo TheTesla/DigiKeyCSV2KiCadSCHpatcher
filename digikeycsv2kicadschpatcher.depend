@@ -1,11 +1,13 @@
 # depslib dependency file v1.0
-1386807210 source:c:\projekte\c++\digikeycsv2kicadschpatcher\main.cpp
+1398360851 source:c:\projekte\c++\digikeycsv2kicadschpatcher\main.cpp
 	<iostream>
+	<sstream>
 	"Table.h"
 	<fstream>
 	<string>
 	"extra.h"
 	"configread.h"
+	"tolerance.h"
 
 1385080315 c:\projekte\c++\digikeycsv2kicadschpatcher\table.h
 	<cstdlib>
@@ -14,15 +16,16 @@
 	<algorithm>
 	"extraops.h"
 
-1386461184 c:\projekte\c++\digikeycsv2kicadschpatcher\extraops.h
+1398380224 c:\projekte\c++\digikeycsv2kicadschpatcher\extraops.h
 	<vector>
 	<string>
+	<cmath>
 
 1385474277 source:c:\projekte\c++\digikeycsv2kicadschpatcher\table.cpp
 	"Table.h"
 	<iostream>
 
-1397905622 source:c:\projekte\c++\digikeycsv2kicadschpatcher\extraops.cpp
+1398382658 source:c:\projekte\c++\digikeycsv2kicadschpatcher\extraops.cpp
 	"extraops.h"
 	<iostream>
 
@@ -39,4 +42,14 @@
 
 1386117581 c:\projekte\c++\digikeycsv2kicadschpatcher\extra.h
 	<string>
+
+1398378303 c:\projekte\c++\digikeycsv2kicadschpatcher\tolerance.h
+	<string>
+	<iostream>
+	<stdexcept>
+	<cmath>
+	"extraops.h"
+
+1398381759 source:c:\projekte\c++\digikeycsv2kicadschpatcher\tolerance.cpp
+	"tolerance.h"
 
