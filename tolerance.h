@@ -21,5 +21,7 @@ double getfactor(size_t reltype);
 double getval(std::string str, size_t &start);
 double tolupp(std::string str, double sign = 1);
 double tollow(std::string str);
+double valupp(double value, double tolupp, reltypes_et reltype);
+double vallow(double value, double tollow, reltypes_et reltype);
 
 #endif // TOLERANCE_H_INCLUDED

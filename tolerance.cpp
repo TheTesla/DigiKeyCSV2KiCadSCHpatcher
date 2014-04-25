@@ -87,3 +87,15 @@ double tollow(std::string str)
 {
     return tolupp(str,-1);
 }
+
+double valupp(double value, double tolupp, reltypes_et reltype)
+{
+    if(ABS==reltype) return value + tolupp;
+    return value * (1+tolupp);
+}
+
+double vallow(double value, double tollow, reltypes_et reltype)
+{
+    return valupp(value, tollow, reltype); // alias - same implementation
+}
+

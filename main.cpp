@@ -79,6 +79,16 @@ int updateNewTable(vector<ihead_t> &iheadvec, vector<ohead_t> &oheadvec, Table &
                 valstream.str("");
                 valstream << std::scientific << tollow(itab.Tableread(row, iheadvec[i].icol));
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, valstream.str());
+            }else if('['==oheadvec[i].oname[0]){
+                otab.Tablewrite(row + orowoff, oheadvec[i].ocol, "");
+                valstream.str("");
+                valstream << std::scientific << vallow(norm_value(itab.Tableread(row, iheadvec[i+1].icol)), tollow(itab.Tableread(row, iheadvec[i].icol)), is_relative(itab.Tableread(row, iheadvec[i].icol)));
+                otab.Tablewrite(row + orowoff, oheadvec[i].ocol, valstream.str());
+            }else if(']'==oheadvec[i].oname[0]){
+                otab.Tablewrite(row + orowoff, oheadvec[i].ocol, "");
+                valstream.str("");
+                valstream << std::scientific << valupp(norm_value(itab.Tableread(row, iheadvec[i-1].icol)), tolupp(itab.Tableread(row, iheadvec[i].icol)), is_relative(itab.Tableread(row, iheadvec[i].icol)));
+                otab.Tablewrite(row + orowoff, oheadvec[i].ocol, valstream.str());
             }else{
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, itab.Tableread(row, iheadvec[i].icol));
             }
