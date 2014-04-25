@@ -53,8 +53,8 @@ double norm_value(string str, size_t &start)
     if(std::string::npos!=prefixpos){
         if('a'==str[prefixpos]) prefix = 0.000000000000000001;
         if('f'==str[prefixpos]) prefix = 0.000000000000001;
-        if('n'==str[prefixpos]) prefix = 0.000000000001;
-        if('p'==str[prefixpos]) prefix = 0.000000001;
+        if('p'==str[prefixpos]) prefix = 0.000000000001;
+        if('n'==str[prefixpos]) prefix = 0.000000001;
         if('µ'==str[prefixpos]) prefix = 0.000001;
         if('u'==str[prefixpos]) prefix = 0.000001;
         if('m'==str[prefixpos]) prefix = 0.001;
