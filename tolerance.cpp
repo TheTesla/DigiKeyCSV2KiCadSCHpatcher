@@ -32,7 +32,7 @@ double getval(std::string str, size_t &start)
     }
     catch(const std::invalid_argument& oor){
         std::cout << valstr << std::endl;
-        std::cerr << "Out of Range error: " << oor.what() << '\n';
+        std::cerr << "getval() - Invalid argument: " << oor.what() << '\n';
         return 0;
     }
     return val;

@@ -13,6 +13,7 @@
 #include <vector>
 #include <string>
 #include <cmath>
+#include <stdexcept>      // std::out_of_range
 
 using namespace std;
 

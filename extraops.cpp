@@ -66,8 +66,15 @@ double norm_value(string str, size_t &start)
         if('P'==str[prefixpos]) prefix = 1000000000000000;
     }
 
-    value = stod(valstr) * prefix;
+    try{
+        value = stod(valstr) * prefix;
+    }
+    catch(const std::invalid_argument& oor){
+        std::cerr << "norm_value() - Invalid argument: " << oor.what() << ", argument=" << valstr << "\n";
+        return NAN;
+    }
     if(stod(""+valstr+"")!=stod(valstr)) cout << "BUG!" << endl;
+
     start = endpos+1;
     if(std::string::npos==endpos) start = std::string::npos;
     return value;

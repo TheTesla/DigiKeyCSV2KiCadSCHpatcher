@@ -47,12 +47,14 @@ int updateicol(vector<iheadvec_t> &iheadmat, vector<Table*> &itabvec)
 int updateNewTable(vector<ihead_t> &iheadvec, vector<ohead_t> &oheadvec, Table &itab, Table &otab, int orowoff)
 {
     unsigned i, row;
+    char c;
     std::stringstream valstream;
     if(itab.getNbrofrows()+orowoff>otab.getNbrofrows()) return -1;
 
     for(i=0;i<min(iheadvec.size(),oheadvec.size());i++){
         // write out tablehead
-        if('$'==oheadvec[i].oname[0]){
+        c = oheadvec[i].oname[0];
+        if('$'==c || '+'==c || '-'==c || '%'==c || '['==c || ']'==c){
             otab.Tablewrite(0, oheadvec[i].ocol, oheadvec[i].oname.substr(1,std::string::npos));
         }else{
             otab.Tablewrite(0, oheadvec[i].ocol, oheadvec[i].oname);

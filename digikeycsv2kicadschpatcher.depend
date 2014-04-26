@@ -16,16 +16,17 @@
 	<algorithm>
 	"extraops.h"
 
-1398380224 c:\projekte\c++\digikeycsv2kicadschpatcher\extraops.h
+1398542953 c:\projekte\c++\digikeycsv2kicadschpatcher\extraops.h
 	<vector>
 	<string>
 	<cmath>
+	<stdexcept>
 
 1385474277 source:c:\projekte\c++\digikeycsv2kicadschpatcher\table.cpp
 	"Table.h"
 	<iostream>
 
-1398387697 source:c:\projekte\c++\digikeycsv2kicadschpatcher\extraops.cpp
+1398543451 source:c:\projekte\c++\digikeycsv2kicadschpatcher\extraops.cpp
 	"extraops.h"
 	<iostream>
 
@@ -50,6 +51,6 @@
 	<cmath>
 	"extraops.h"
 
-1398466289 source:c:\projekte\c++\digikeycsv2kicadschpatcher\tolerance.cpp
+1398544424 source:c:\projekte\c++\digikeycsv2kicadschpatcher\tolerance.cpp
 	"tolerance.h"
 
