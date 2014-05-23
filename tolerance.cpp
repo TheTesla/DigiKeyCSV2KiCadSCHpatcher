@@ -1,8 +1,9 @@
 
 #include "tolerance.h"
 
-reltypes_et is_relative(std::string str)
+reltypes_et is_relative(std::string str, size_t start)
 {
+    str = str.substr(start);
     if(std::string::npos!=str.find("ppm")) return PPM;
     if(std::string::npos!=str.find("ppb")) return PPB;
     if(std::string::npos!=str.find("%")) return PERCENT;
@@ -60,7 +61,9 @@ double tolupp(std::string str, double sign)
     size_t start = 0;
     reltypes_et reltype;
     double val1, val2, factor;
+
     reltype = is_relative(str);
+
     if(ABS==reltype){
         // absolute tolerance value
         // first number

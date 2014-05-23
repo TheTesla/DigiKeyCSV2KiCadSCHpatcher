@@ -16,7 +16,7 @@ typedef enum reltypes_et
     PPB = 4
 } reltypes_et;
 
-reltypes_et is_relative(std::string str);
+reltypes_et is_relative(std::string str, size_t start = 0);
 double getfactor(size_t reltype);
 double getval(std::string str, size_t &start);
 double tolupp(std::string str, double sign = 1);
