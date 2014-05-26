@@ -71,6 +71,8 @@ int updateNewTable(vector<ihead_t> &iheadvec, vector<ohead_t> &oheadvec, Table &
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, valstream.str());
             }else if('%'==oheadvec[i].oname[0]){
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, to_string(is_relative(itab.Tableread(row, iheadvec[i].icol))));
+            }else if('\\'==oheadvec[i].oname[0]){
+                otab.Tablewrite(row + orowoff, oheadvec[i].ocol, firstword(itab.Tableread(row, iheadvec[i].icol)));
             }else if('+'==oheadvec[i].oname[0]){
                 otab.Tablewrite(row + orowoff, oheadvec[i].ocol, "");
                 valstream.str("");

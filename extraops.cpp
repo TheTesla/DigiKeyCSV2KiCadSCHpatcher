@@ -108,3 +108,10 @@ bool entrymatch(string str, string findstr, bool strcontainsentry, bool entrycon
     if(str==findstr) return true;
     return false;
 }
+
+string firstword(string str)
+{
+    size_t pos;
+    pos = str.find_first_of(" ");
+    return str.substr(0,pos);
+}
